@@ -11,23 +11,24 @@ app.use(cors());
 
 // Configuration de la connexion à la base de données MySQL
 const db = mysql.createConnection({
-    host: '207.154.213.42',
-    user: 'arthur',
-    password: '2401',
+    host: 'database-1.cn8ekuoukt2t.eu-north-1.rds.amazonaws.com',
+    user: 'admin',
+    password: 'dgcXp87#oPoNtiG<0]w6v~DASVUx',
     database: 'aws_project'
 });
 
 // Connectez-vous à la base de données
-db.connect((err) => {
-    if (err) {
-        throw err;
-    }
-    console.log('MySQL Connected...');
-});
 
 // request
 
 app.post('/adduser', (req, res) => {
+    db.connect((err) => {
+        if (err) {
+            throw err;
+        }
+        console.log('MySQL Connected...');
+    });
+    
     const newUser = { name: req.body.name, point: req.body.point };
     let sql = 'INSERT INTO users SET ?';
     db.query(sql, newUser, (err, result) => {
@@ -37,6 +38,13 @@ app.post('/adduser', (req, res) => {
 });
 
 app.get('/users', (req, res) => {
+    db.connect((err) => {
+        if (err) {
+            throw err;
+        }
+        console.log('MySQL Connected...');
+    });
+    
     let sql = 'SELECT * FROM users';
     db.query(sql, (err, results) => {
         if (err) throw err;
