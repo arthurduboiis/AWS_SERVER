@@ -1,12 +1,13 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
-
+const cors = require('cors');
 
 // Créez une application Express
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 // Configuration de la connexion à la base de données MySQL
 const db = mysql.createConnection({
@@ -35,8 +36,27 @@ app.post('/adduser', (req, res) => {
     });
 });
 
+app.get('/users', (req, res) => {
+    let sql = 'SELECT * FROM users';
+    db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+
+
+
 // Démarrez le serveur
 const PORT = 3000;
-app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//     console.log(`Server started on port ${PORT}`);
+// });
+
+if (require.main === module) {
+    app.listen(PORT, () => {
+      console.log(`Server is running at http://0.0.0.0:${PORT}`);
+    });
+} 
+else {
+    module.exports = app;
+}
