@@ -11,7 +11,7 @@ app.use(cors());
 
 // Configuration de la connexion à la base de données MySQL
 const db = mysql.createConnection({
-    host: '127.0.0.1',
+    host: '207.154.213.42',
     user: 'arthur',
     password: '2401',
     database: 'aws_project'
