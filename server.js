@@ -44,6 +44,10 @@ app.get('/users', (req, res) => {
     });
 });
 
+app.get('/hello', (req, res) => {
+    res.send('Hello Jest2!');
+});
+
 
 
 // Démarrez le serveur
